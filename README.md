@@ -1,4 +1,5 @@
-# gcbridge
+# ![gcbridge icon](https://u.cubeupload.com/AXE_IMG3/costume4.png)
+
 GCBridge lets you talk to people in home from a groupchat. <br>
 Why? Because why not.
 
