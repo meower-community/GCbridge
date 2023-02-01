@@ -11,7 +11,6 @@ const username = "gcbridge";//use whatever username lol
 //const password = process.env["PS"];
 console.log(`Username: ${username}`);
 console.log(`Password: ${pswd}`);
-const help = [`@${username} help`, `@${username} subscribe`, `@${username} unsubscribe`, `@${username} feeds`, `@${username} read`];
 const db = new JSONdb("db.json");
 
 const bot = new Bot(username, pswd);
