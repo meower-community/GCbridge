@@ -1,1 +1,0 @@
-{"cmd": "direct","listener: "listener_5357168",val: {cmd: "get_chat_list",val: page: 1}}
