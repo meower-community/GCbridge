@@ -7,10 +7,7 @@ import { exec } from "child_process";
 dotenv.config();
 
 const pswd = process.env["PSWD"];
-const username = "gcbridge";//use whatever username lol
-//const password = process.env["PS"];
-console.log(`Username: ${username}`);
-console.log(`Password: ${pswd}`);
+const username = "gcbridge";
 const db = new JSONdb("db.json");
 
 const bot = new Bot(username, pswd);
@@ -26,24 +23,33 @@ const gclist = db.get("gcs");
 bot.onPost(async (user, content, origin) => {
     var args = content.split(' ');
     console.log(origin);
+    var a = true;
+    if (args[0] != 'gcb!') {
+      a = false;
+    }
     
-    if (args[0] == '!help') {
-      bot.post('Commands:\n\naddgc! <chatid> - add a groupchat\nNote: gcbridge will listen to any posts you make and send it to all of the added groupchats\n\nIf you don\'t want other users posting in your chat you can uninvite the bot.\n\nHosted by @AXEstudios at https://replit.com/@AXEstudios/gcbridge');
-    }  else if (args[0] == 'addgc!') {
-      if (args[1]!="livechat") {
-        gclist.push(args[1]);
-        db.set("gcs", gclist);
-        bot.post('Added!',origin);
-      } else {
+    
+    if (args[1] == 'help') {
+      if (a==true) {
+        bot.post('Commands:\n\ngcb! addgc <chatid> - add a groupchat\nNote: gcbridge will listen to any posts you make and send it to all of the added groupchats\n\nIf you don\'t want other users posting in your chat you can uninvite the bot.\n\nHosted by @AXEstudios at https://replit.com/@AXEstudios/gcbridge');
+      }
+    }  else if (args[1] == 'addgc') {
+      if (a==true) {
+        if (args[1]!="livechat") {
+          gclist.push(args[2]);
+          db.set("gcs", gclist);
+          bot.post('Added!',origin);
+        } else {
           bot.post(`@${user} L can't add livechat`)
+        }
       }
     }  else if (origin!="livechat") {
       if (origin!=null) {
-        bot.post(`${user}: ${args.join(' ')}`);
+        bot.post(`${user}: ${content}`);
       }
       for (var i = 0;i < gclist.length;i++) {
         if (origin!=gclist[i]) {
-          bot.post(`${user}: ${args.join(' ')}`,gclist[i]);
+          bot.post(`${user}: ${content}`,gclist[i]);
         }
       }
     }
@@ -62,5 +68,5 @@ bot.onClose(() => {
 });
 
 bot.onLogin(() => {
-    bot.post(`${username} online!\nDo "!help" for help.`);
+    bot.post(`${username} online!\nDo "gcb! help" for help.`);
 });
