@@ -13,4 +13,5 @@ but can't, if their bot supports gcbridge you can do it succesfully.
 ```
 ~/gcbridge$ PSWD="password";export PSWD;npm run start
 ```
-You can't use it with the Run command included in the config files
+## If you are using replit:
+You can create a secret for the PSWD variable.
