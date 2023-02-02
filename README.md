@@ -15,3 +15,4 @@ but can't, if their bot supports gcbridge you can do it succesfully.
 ```
 ## If you are using replit:
 You can create a secret for the PSWD variable.
+Just set the data in the `run` object in your replit config file to `npm run start`
