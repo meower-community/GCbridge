@@ -1,7 +1,7 @@
 {
-  "name": "feedsbot",
-  "version": "1.0.0",
-  "description": "FeedsBot lets you subscribe to RSS and Atom feeds on Meower!",
+  "name": "GCbridge",
+  "version": "0.2.0",
+  "description": "Bridge between gcs and home! A fork of feedsbot.",
   "main": "./src/index.js",
   "type": "module",
   "scripts": {
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MeowerBots/FeedsBot.git"
+    "url": "git+https://github.com/MeowerBots/GCbridge.git"
   },
-  "author": "M.D. Walters",
+  "author": "AXEstudios",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/MeowerBots/FeedsBot/issues"
+    "url": "https://github.com/MeowerBots/GCbridge/issues"
   },
-  "homepage": "https://github.com/MeowerBots/FeedsBot#readme",
+  "homepage": "https://github.com/MeowerBots/GCbridge#readme",
   "dependencies": {
     "@extractus/feed-extractor": "^6.2.1",
     "dotenv": "^16.0.3",
