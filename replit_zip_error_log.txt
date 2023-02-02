@@ -1,1 +1,0 @@
-{"error":".zip archives do not support non-regular files","level":"error","msg":"unable to write file node_modules/.bin/fxparser","time":"2023-02-01T16:41:33Z"}
