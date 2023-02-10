@@ -1,6 +1,6 @@
 # ![gcbridge icon](https://u.cubeupload.com/AXE_IMG3/costume4.png)
 
-GCBridge lets you talk to people in home from a groupchat. <br>
+GCBridge lets you talk between groupchats home, and everything in between. <br>
 Why? Because why not.
 
 ## Hosting platform/source
