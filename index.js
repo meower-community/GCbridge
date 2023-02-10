@@ -28,6 +28,13 @@ var gcarr = db.get("gcarray");
 
 
 bot.onPost(async (user, content, origin) => {
+    if (user == "Revower") {
+      a = content.split(':');
+      if (content.length>1) {
+        content = a[1];
+        list.content.splice(0);
+      }
+    }
     var args = content.split(' ');
     console.log(`ORG: ${origin}`);
     var a = true; //boolean if using prefix
@@ -140,5 +147,5 @@ bot.onClose(() => {
 });
 
 bot.onLogin(() => {
-    bot.post(`GCBridge 0.3.2 online!\nDo "gcb! help" for help. For extra information, do "gcb! info"`);
+    bot.post(`GCBridge 0.4 online!\nDo "gcb! help" for help. For extra information, do "gcb! info"`);
 });

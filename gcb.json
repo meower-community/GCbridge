@@ -1,11 +1,17 @@
 {
-    "gcs":[
+    "gcs": [
         {
-            "chatid":null,
-            "posthome":false
+            "chatid": null,
+            "posthome": false
+        },
+        {
+            "chatid": "3d66d9c0-9a52-406c-ba1d-f45762a8bf83",
+            "auth": [],
+            "posthome": true
         }
-     ],
-    "gcarray":[
-        null
+    ],
+    "gcarray": [
+        null,
+        "3d66d9c0-9a52-406c-ba1d-f45762a8bf83"
     ]
 }
