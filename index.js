@@ -81,19 +81,31 @@ bot.onPost(async (user, content, origin) => {
       
     } else if (args[1] == 'unauth') { // unauthorise
       console.log(`New unauth from: ${user}`);
-      gclist[gcarr.indexOf(origin)].auth[gclist[gcarr.indexOf(origin)].auth.indexOf(args[2])] = "";
-      db.set("gcs",gclist);
-      bot.post(`@${user} Chat is no longer Added!`,origin);
+      if (gcarr.includes(origin)) {
+        gclist[gcarr.indexOf(origin)].auth[gclist[gcarr.indexOf(origin)].auth.indexOf(args[2])] = "";
+        db.set("gcs",gclist);
+        bot.post(`@${user} Chat is no longer Added!`,origin);
+      } else {
+        bot.post(`@${user} That chat isnt in my DB...`,origin);
+      }
 
     }  else if (args[1] == 'homeoff') {
        console.log(`Home turned off from: ${user}`);
-       gclist[gcarr.indexOf(origin)].posthome = false;
-       bot.post(`@${user} post-home turned off!`, origin);
+       if (gcarr.includes(origin)) {
+         gclist[gcarr.indexOf(origin)].posthome = false;
+         bot.post(`@${user} post-home turned off!`, origin);
+       } else {
+        bot.post(`@${user} That chat isnt in my DB...`,origin);
+       }
 
     }  else if (args[1] == 'homeon') {
-       console.log(`Home turned off from: ${user}`);
-       gclist[gcarr.indexOf(origin)].posthome = true;
-       bot.post(`@${user} post-home turned on!`, origin);
+      console.log(`Home turned off from: ${user}`);
+      if (gcarr.includes(origin)) {
+        gclist[gcarr.indexOf(origin)].posthome = true;
+        bot.post(`@${user} post-home turned off!`, origin);
+      } else {
+       bot.post(`@${user} That chat isnt in my DB...`,origin);
+      }
       
     }  else if (args[1] == 'addgc') {
       console.log(`New addgc request from: ${user}`);
@@ -128,5 +140,5 @@ bot.onClose(() => {
 });
 
 bot.onLogin(() => {
-    bot.post(`GCBridge 0.3 online!\nDo "gcb! help" for help. For extra information, do "gcb! info"`);
+    bot.post(`GCBridge 0.3.2 online!\nDo "gcb! help" for help. For extra information, do "gcb! info"`);
 });

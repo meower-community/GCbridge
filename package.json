@@ -1,6 +1,6 @@
 {
   "name": "GCbridge",
-  "version": "0.3.0",
+  "version": "0.3.2",
   "description": "Bridge between gcs and home! A fork of feedsbot.",
   "main": "./src/index.js",
   "type": "module",
