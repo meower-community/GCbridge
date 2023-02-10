@@ -7,56 +7,110 @@ import { exec } from "child_process";
 dotenv.config();
 
 const pswd = process.env["PSWD"];
-const username = "gcbridge";
-const db = new JSONdb("db.json");
+const username = "gcbridge";//use whatever username lol
+//const password = process.env["PS"];
+const db = new JSONdb("gcb.json");
 
 const bot = new Bot(username, pswd);
 
+
 if (!(db.has("gcs"))) {
-    db.set("gcs", []);
+    db.set("gcs", [{chatid: null,posthome: false}]);
+}
+if (!(db.has("gcarray"))) {
+    db.set("gcarray", [null]);
 }
 
 
-const gclist = db.get("gcs");
+var gclist = db.get("gcs");
+var gcarr = db.get("gcarray");
+
 
 
 bot.onPost(async (user, content, origin) => {
     var args = content.split(' ');
-    console.log(origin);
-    var a = true;
+    console.log(`ORG: ${origin}`);
+    var a = true; //boolean if using prefix
+  
     if (args[0] != 'gcb!') {
       a = false;
-    }
-    
-    
-    if (args[1] == 'help') {
-      if (a==true) {
-        bot.post('Commands:\n\ngcb! addgc <chatid> - add a groupchat\nNote: gcbridge will listen to any posts you make and send it to all of the added groupchats\n\nIf you don\'t want other users posting in your chat you can uninvite the bot.\n\nHosted by @AXEstudios at https://replit.com/@AXEstudios/gcbridge');
+      console.log('Incoming chat message!!!');
+      //console.log(gcarr.indexOf(origin))
+      var x = (origin==undefined|origin==null) ? [] : gclist[gcarr.indexOf(origin)].auth;
+      var mutd = (x==undefined|x==null) ? [] : x;
+      if (origin!=null&gclist[gcarr.indexOf(origin)].posthome==true) {
+        bot.post(`${user}: ${content}`);
+      } else if (origin==null){
+        for (let i in gclist) {
+          //console.log(`i: ${i}`);
+          if (gclist[i].posthome==true) {
+            bot.post(`${user}: ${content}`,gclist[i].chatid);
+          }
+        }
       }
+      var mtd = [];
+      for (let i in gclist) {
+        //console.log(gclist[i]);
+        mtd = (gclist[i].auth==undefined|gclist[i].auth==null) ? [origin] : gclist[i].auth;
+        //console.log(`auth: ${mtd} x: ${mutd}`)
+        if (origin!=gclist[i].chatid) {
+          console.log(mutd.includes(gclist[i].chatid));
+          if (mutd.includes(gclist[i].chatid)) {
+            //console.log(mtd.includes(origin));
+            if (mtd.includes(origin)) {
+              bot.post(`${user}: ${content}`,gclist[i].chatid);
+            }
+          }
+        }
+      }
+    } else if (args[1] == 'info') {
+      bot.post('GCBridge - Hosted by @AXEstudios at https://replit.com/@AXEstudios/GCbridge',origin);
+      
+    }  else if (args[1] == 'help') {
+      console.log(`New help message from: ${user}`);
+      bot.post('Commands:\n\n gcb! addgc <chatid> - add a groupchat\n gcb! auth <chatid> - authorize a chat (requires that both chats auth each other)\n gcb! unauth <chatid> - unauthorize chat\n gcb! homeoff - unauthorize home\n gcb! homeon - allow people from home to interact\n\nNote: GCBridge requires that you invite it to your groupchat to work properly.',origin);
+      
+
+      
+    } else if (args[1] == 'auth') { // authorise a chat to talk
+      console.log(`New auth from: ${user}`);
+      gclist[gcarr.indexOf(origin)].auth.push(args[2]);
+      db.set("gcs",gclist);
+      bot.post(`@${user} Chat is Added!`,origin);
+
+      
+    } else if (args[1] == 'unauth') { // unauthorise
+      gclist[gcarr.indexOf(origin)].auth[gclist[gcarr.indexOf(origin)].auth.indexOf(args[2])] = "";
+      db.set("gcs",gclist);
+      bot.post(`@${user} Chat is no longer Added!`,origin);
+
+    }  else if (args[1] == 'homeoff') {
+       gclist[gcarr.indexOf(origin)].posthome = false;
+
+    }  else if (args[1] == 'homeon') {
+       gclist[gcarr.indexOf(origin)].posthome = true;
+      
     }  else if (args[1] == 'addgc') {
       if (a==true) {
+        var bb=args[2];
         if (args[1]!="livechat") {
-          gclist.push(args[2]);
+          gclist.push({"chatid":bb,"auth":[],"posthome":true});
+          gcarr.push(bb);
           db.set("gcs", gclist);
-          bot.post('Added!',origin);
+          db.set("gcarray", gcarr);
+          bot.post(`@${user} Added!`,origin);
         } else {
-          bot.post(`@${user} L can't add livechat`)
+          bot.post(`@${user} L can't add livechat`,origin)
         }
       }
-    }  else if (origin!="livechat") {
-      if (origin!=null) {
-        bot.post(`${user}: ${content}`);
-      }
-      for (var i = 0;i < gclist.length;i++) {
-        if (origin!=gclist[i]) {
-          bot.post(`${user}: ${content}`,gclist[i]);
-        }
-      }
+    }  else { // the actual gcbridge code
+
+      bot.post(`@${user} no such command!`,origin);
     }
 });
 
 bot.onMessage((data) => {
-    console.log(`New message: ${data}`);
+    //console.log(`New message: ${data}`);
 });
 
 bot.onClose(() => {
@@ -68,5 +122,5 @@ bot.onClose(() => {
 });
 
 bot.onLogin(() => {
-    bot.post(`${username} online!\nDo "gcb! help" for help.`);
+    bot.post(`${username} online!\nDo "gcb! help" for help. For extra information, do "gcb! info"`);
 });
