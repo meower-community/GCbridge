@@ -54,7 +54,7 @@ bot.onPost(async (user, content, origin) => {
         mtd = (gclist[i].auth==undefined|gclist[i].auth==null) ? [origin] : gclist[i].auth;
         //console.log(`auth: ${mtd} x: ${mutd}`)
         if (origin!=gclist[i].chatid) {
-          console.log(mutd.includes(gclist[i].chatid));
+          //console.log(mutd.includes(gclist[i].chatid));
           if (mutd.includes(gclist[i].chatid)) {
             //console.log(mtd.includes(origin));
             if (mtd.includes(origin)) {
@@ -80,17 +80,23 @@ bot.onPost(async (user, content, origin) => {
 
       
     } else if (args[1] == 'unauth') { // unauthorise
+      console.log(`New unauth from: ${user}`);
       gclist[gcarr.indexOf(origin)].auth[gclist[gcarr.indexOf(origin)].auth.indexOf(args[2])] = "";
       db.set("gcs",gclist);
       bot.post(`@${user} Chat is no longer Added!`,origin);
 
     }  else if (args[1] == 'homeoff') {
+       console.log(`Home turned off from: ${user}`);
        gclist[gcarr.indexOf(origin)].posthome = false;
+       bot.post(`@${user} post-home turned off!`, origin);
 
     }  else if (args[1] == 'homeon') {
+       console.log(`Home turned off from: ${user}`);
        gclist[gcarr.indexOf(origin)].posthome = true;
+       bot.post(`@${user} post-home turned on!`, origin);
       
     }  else if (args[1] == 'addgc') {
+      console.log(`New addgc request from: ${user}`);
       if (a==true) {
         var bb=args[2];
         if (args[1]!="livechat") {
@@ -103,8 +109,8 @@ bot.onPost(async (user, content, origin) => {
           bot.post(`@${user} L can't add livechat`,origin)
         }
       }
-    }  else { // the actual gcbridge code
-
+    }  else {
+      console.log('Bad command.');
       bot.post(`@${user} no such command!`,origin);
     }
 });
@@ -122,5 +128,5 @@ bot.onClose(() => {
 });
 
 bot.onLogin(() => {
-    bot.post(`${username} online!\nDo "gcb! help" for help. For extra information, do "gcb! info"`);
+    bot.post(`GCBridge 0.3 online!\nDo "gcb! help" for help. For extra information, do "gcb! info"`);
 });
