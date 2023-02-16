@@ -2,6 +2,11 @@ import Bot from "meowerbot";
 import * as dotenv from "dotenv";
 import JSONdb from "simple-json-db";
 import { exec } from "child_process";
+import readline from "readline";
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
 
 dotenv.config();
@@ -21,9 +26,15 @@ if (!(db.has("gcarray"))) {
     db.set("gcarray", [null]);
 }
 if (!(db.has("hosting"))) {
-    db.set("hosting", prompt("Hosting: "));
+    rl.question("Hosting: ",function(usr) {
+      db.set("hosting", usr);
+      rl.close();
+    });
 } else if (db.get("hosting")==null) {
-    db.set("hosting", prompt("Hosting: "));
+  rl.question("Hosting: ",function(usr) {
+    db.set("hosting", usr);
+    rl.close();
+  });
 }
 
 
