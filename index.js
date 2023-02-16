@@ -2,6 +2,11 @@ import Bot from "meowerbot";
 import * as dotenv from "dotenv";
 import JSONdb from "simple-json-db";
 import { exec } from "child_process";
+import readline from "readline";
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
 
 dotenv.config();
@@ -21,15 +26,24 @@ if (!(db.has("gcarray"))) {
     db.set("gcarray", [null]);
 }
 if (!(db.has("hosting"))) {
-    db.set("hosting", prompt("Hosting: "));
-} else if (db.get("hosting")==null) {
-    db.set("hosting", prompt("Hosting: "));
+    rl.question("Hosting: ",function(usr) {
+      db.set("hosting", usr);
+      console.log(usr);
+      rl.close();
+    });
+} else if (db.get("hosting")==null|db.get("hosting")==undefined) {
+  rl.question("Hosting: ",function(usr) {
+    db.set("hosting", usr);
+    console.log(usr);
+    rl.close();
+  });
 }
 
 
 var gclist = db.get("gcs");
 var gcarr = db.get("gcarray");
 var host = db.get("hosting");
+console.log(host);
 
 
 
@@ -77,7 +91,8 @@ bot.onPost(async (user, content, origin) => {
         }
       }
     } else if (args[1] == 'info') {
-      bot.post(`GCBridge - Made by @AXEstudios, Hosted by @${host}`,origin);
+      console.log(`New info message from: ${user}`);
+      bot.post(`GCBridge - Made by @AXEstudios, Hosted by @${db.get("hosting")}`,origin);
       
     }  else if (args[1] == 'help') {
       console.log(`New help message from: ${user}`);
