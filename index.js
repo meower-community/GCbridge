@@ -28,11 +28,13 @@ if (!(db.has("gcarray"))) {
 if (!(db.has("hosting"))) {
     rl.question("Hosting: ",function(usr) {
       db.set("hosting", usr);
+      console.log(usr);
       rl.close();
     });
-} else if (db.get("hosting")==null) {
+} else if (db.get("hosting")==null|db.get("hosting")==undefined) {
   rl.question("Hosting: ",function(usr) {
     db.set("hosting", usr);
+    console.log(usr);
     rl.close();
   });
 }
@@ -41,6 +43,7 @@ if (!(db.has("hosting"))) {
 var gclist = db.get("gcs");
 var gcarr = db.get("gcarray");
 var host = db.get("hosting");
+console.log(host);
 
 
 
@@ -88,7 +91,8 @@ bot.onPost(async (user, content, origin) => {
         }
       }
     } else if (args[1] == 'info') {
-      bot.post(`GCBridge - Made by @AXEstudios, Hosted by @${host}`,origin);
+      console.log(`New info message from: ${user}`);
+      bot.post(`GCBridge - Made by @AXEstudios, Hosted by @${db.get("hosting")}`,origin);
       
     }  else if (args[1] == 'help') {
       console.log(`New help message from: ${user}`);
