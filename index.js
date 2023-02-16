@@ -20,10 +20,16 @@ if (!(db.has("gcs"))) {
 if (!(db.has("gcarray"))) {
     db.set("gcarray", [null]);
 }
+if (!(db.has("hosting"))) {
+    db.set("hosting", prompt("Hosting: "));
+} else if (db.get("hosting")==null) {
+    db.set("hosting", prompt("Hosting: "));
+}
 
 
 var gclist = db.get("gcs");
 var gcarr = db.get("gcarray");
+var host = db.get("hosting");
 
 
 
@@ -71,7 +77,7 @@ bot.onPost(async (user, content, origin) => {
         }
       }
     } else if (args[1] == 'info') {
-      bot.post('GCBridge - Hosted by @AXEstudios at https://replit.com/@AXEstudios/GCbridge',origin);
+      bot.post(`GCBridge - Made by @AXEstudios, Hosted by @${host}`,origin);
       
     }  else if (args[1] == 'help') {
       console.log(`New help message from: ${user}`);
