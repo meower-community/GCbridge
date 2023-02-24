@@ -141,7 +141,8 @@ bot.onPost(async (user, content, origin) => {
       console.log(`New addgc request from: ${user}`);
       if (a==true) {
         var bb=args[2];
-        if (args[1]!="livechat"|args[1]!=null) {
+        var res=["livchat",null,undefined];
+        if (!res.includes(bb)) {
           gclist.push({"chatid":bb,"auth":[],"posthome":true});
           gcarr.push(bb);
           db.set("gcs", gclist);
