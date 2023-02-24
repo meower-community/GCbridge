@@ -103,11 +103,14 @@ bot.onPost(async (user, content, origin) => {
 
       
     } else if (args[1] == 'auth') { // authorise a chat to talk
-      console.log(`New auth from: ${user}`);
-      gclist[gcarr.indexOf(origin)].auth.push(args[2]);
-      db.set("gcs",gclist);
-      bot.post(`@${user} Chat is Added!`,origin);
-
+      console.log(`New auth request from: ${user}`);
+      if (!origin==null) {
+        gclist[gcarr.indexOf(origin)].auth.push(args[2]);
+        db.set("gcs",gclist);
+        bot.post(`@${user} Chat is Added!`,origin);
+      } else {
+        bot.post(`@${user} Cant auth from home.`);
+      }
       
     } else if (args[1] == 'unauth') { // unauthorise
       console.log(`New unauth from: ${user}`);
@@ -129,10 +132,14 @@ bot.onPost(async (user, content, origin) => {
        }
 
     }  else if (args[1] == 'homeon') {
-      console.log(`Home turned off from: ${user}`);
+      console.log(`Home turned on from: ${user}`);
       if (gcarr.includes(origin)) {
-        gclist[gcarr.indexOf(origin)].posthome = true;
-        bot.post(`@${user} post-home turned off!`, origin);
+        if (!origin==null) {
+          gclist[gcarr.indexOf(origin)].posthome = true;
+          bot.post(`@${user} post-home turned on!`, origin);
+        } else {
+          bot.post(`@${user} what are you doing?`);
+        }
       } else {
        bot.post(`@${user} That chat isnt in my DB...`,origin);
       }
@@ -171,5 +178,5 @@ bot.onClose(() => {
 });
 
 bot.onLogin(() => {
-    bot.post(`GCBridge 0.5 online!\nDo "@gcbridge help" for help. For extra information, do "@gcbridge info"`);
+    bot.post(`GCBridge 0.5.1 online!\nDo "@gcbridge help" for help. For extra information, do "@gcbridge info"`);
 });
