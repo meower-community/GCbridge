@@ -148,7 +148,7 @@ bot.onPost(async (user, content, origin) => {
           db.set("gcarray", gcarr);
           bot.post(`@${user} Added!`,origin);
         } else {
-          bot.post(`@${user} L can't add livechat`,origin)
+          bot.post(`@${user} Thats not a gc.`,origin)
         }
       }
     }  else {
