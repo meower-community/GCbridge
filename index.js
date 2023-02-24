@@ -141,7 +141,7 @@ bot.onPost(async (user, content, origin) => {
       console.log(`New addgc request from: ${user}`);
       if (a==true) {
         var bb=args[2];
-        if (args[1]!="livechat") {
+        if (args[1]!="livechat"|args[1]!=null) {
           gclist.push({"chatid":bb,"auth":[],"posthome":true});
           gcarr.push(bb);
           db.set("gcs", gclist);
@@ -170,5 +170,5 @@ bot.onClose(() => {
 });
 
 bot.onLogin(() => {
-    bot.post(`GCBridge 0.4 online!\nDo "@gcbridge help" for help. For extra information, do "@gcbridge info"`);
+    bot.post(`GCBridge 0.5 online!\nDo "@gcbridge help" for help. For extra information, do "@gcbridge info"`);
 });
