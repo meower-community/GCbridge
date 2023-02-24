@@ -1,1 +1,24 @@
-{}
+{
+    "gcs": [
+        {
+            "chatid": null,
+            "posthome": false
+        },
+        {
+            "chatid": "TESTING",
+            "auth": [],
+            "posthome": true
+        },
+        {
+            "chatid": "fb48f8f6-7f92-4d76-b19f-fa5e8791a574",
+            "auth": [],
+            "posthome": true
+        }
+    ],
+    "gcarray": [
+        null,
+        "TESTING",
+        "fb48f8f6-7f92-4d76-b19f-fa5e8791a574"
+    ],
+    "hosting": "AXEstudios"
+}

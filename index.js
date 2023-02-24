@@ -59,12 +59,14 @@ bot.onPost(async (user, content, origin) => {
     console.log(`ORG: ${origin}`);
     var a = true; //boolean if using prefix
   
-    if (args[0] != 'gcb!') {
+    if (args[0] != '@gcbridge') {
       a = false;
       console.log('Incoming chat message!!!');
       //console.log(gcarr.indexOf(origin))
       var x = (origin==undefined|origin==null) ? [] : gclist[gcarr.indexOf(origin)].auth;
-      var mutd = (x==undefined|x==null) ? [] : x;
+      var mutd = (x==undefined|x==null) ? [] : x;if (!gcarr.includes(origin)) {
+        gclist.push({"chatid":origin,"auth":[],"posthome":true});gcarr.push(origin);db.set()
+      }
       if (origin!=null&gclist[gcarr.indexOf(origin)].posthome==true) {
         bot.post(`${user}: ${content}`);
       } else if (origin==null){
@@ -96,7 +98,7 @@ bot.onPost(async (user, content, origin) => {
       
     }  else if (args[1] == 'help') {
       console.log(`New help message from: ${user}`);
-      bot.post('Commands:\n\n gcb! addgc <chatid> - add a groupchat\n gcb! auth <chatid> - authorize a chat (requires that both chats auth each other)\n gcb! unauth <chatid> - unauthorize chat\n gcb! homeoff - unauthorize home\n gcb! homeon - allow people from home to interact\n\nNote: GCBridge requires that you invite it to your groupchat to work properly.',origin);
+      bot.post('Commands:\n\n addgc <chatid> - add a groupchat\n auth <chatid> - authorize a chat (requires that both chats auth each other)\n unauth <chatid> - unauthorize chat\n homeoff - unauthorize home\n homeon - allow people from home to interact\n\nNote: GCBridge requires that you invite it to your groupchat to work properly.',origin);
       
 
       
@@ -168,5 +170,5 @@ bot.onClose(() => {
 });
 
 bot.onLogin(() => {
-    bot.post(`GCBridge 0.4 online!\nDo "gcb! help" for help. For extra information, do "gcb! info"`);
+    bot.post(`GCBridge 0.4 online!\nDo "@gcbridge help" for help. For extra information, do "@gcbridge info"`);
 });
